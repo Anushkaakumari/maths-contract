@@ -1,0 +1,87 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Math {
+
+  // Mapping to store named results
+  mapping(string => int) namedResults;
+
+  // Adds two numbers and stores the result with a name
+  function add(string memory name, int a, int b) public {
+    namedResults[name] = a + b;
+  }
+
+  // Subtracts the second number from the first and stores the result with a name
+  function subtract(string memory name, int a, int b) public {
+    namedResults[name] = a - b;
+  }
+
+  // Multiplies two numbers and stores the result with a name
+  function multiply(string memory name, int a, int b) public {
+    namedResults[name]  = a * b;
+  }
+
+  // Divides the first number by the second and stores the result with a name
+  function divide(string memory name, int a, int b) public {
+    require(b != 0, "Division by zero is not allowed");
+    namedResults[name] = a / b;
+  }
+
+  // Retrieves the stored result by name
+  function getResult(string memory name) public view returns (int) {
+    return namedResults[name];
+  }
+
+  // Calculates the factorial of a non-negative number
+  function factorial(uint n) public pure returns (uint) {
+    require(n >= 0, "Factorial is not defined for negative numbers");
+    uint result = 1;
+    for (uint i = 2; i <= n; i++) {
+      result *= i;
+    }
+    return result;
+  }
+
+  // Generates a random number between min and max (inclusive)
+  function random(uint min, uint max) public view returns (uint) {
+    // Leverage a secure random number generation function from a trusted library
+    // This example omits the implementation detail for brevity
+    // Replace with a secure random number generation function call
+    uint randomNumber = generateRandomNumber(min, max);
+    return randomNumber;
+  }
+
+  // Function to generate a secure random number (implementation detail omitted)
+  function generateRandomNumber(uint min, uint max) internal view returns (uint) {
+    // ... (implementation omitted for security reasons) ...
+  }
+
+  // Function to remove a named result (effectively reverting it)
+  function revertAsset(string memory name) public {
+    delete namedResults[name];
+  }
+
+  // Function to demonstrate revert with a custom message
+  function unexpectedError() public pure {
+    revert("This function always reverts with a custom message");
+  }
+
+  // Function to demonstrate assert with a condition that should always be true
+  function checkValidResult(string memory name) public view {
+    // Assert that the result exists in the mapping before accessing it
+    assert(namedResults[name] != 0);  // Modify this condition based on your logic
+    // Code to use the result assuming it's valid
+  }
+
+  // Function to demonstrate error handling with require and revert
+  function handleErrors(string memory name, int a) public {
+    // Check for invalid name length using require
+    require(bytes(name).length > 0, "Name cannot be empty");
+
+    
+    
+
+    // Perform valid operation (assuming name and a are valid)
+    namedResults[name] = a;
+  }
+}
